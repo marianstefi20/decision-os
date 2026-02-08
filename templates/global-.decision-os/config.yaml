@@ -1,0 +1,14 @@
+# Decision OS Global Configuration
+# Place this folder at ~/.decision-os/
+#
+# Global foundations apply to ALL projects as recommendations (not rules).
+# They represent universal learnings that transcend specific tech stacks.
+#
+# Resolution order: PROJECT foundations win over GLOBAL on conflicts.
+
+project: _global
+version: 1
+scope: GLOBAL
+
+# Global scope has no repos or project-specific signals.
+# It contains only universal foundations.

@@ -1,0 +1,4 @@
+# Cases directory
+# Each case is a subdirectory with:
+# - case.yaml (case metadata and decisions)
+# - pressures.yaml (pressure events)

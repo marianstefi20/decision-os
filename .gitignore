@@ -1,0 +1,19 @@
+node_modules/
+dist/
+*.tgz
+
+# OS
+.DS_Store
+
+# IDE
+.idea/
+*.swp
+*.swo
+*.code-workspace
+
+# Environment
+.env
+.env.local
+
+# Project's own DecisionOS data (not the templates)
+/.decision-os/

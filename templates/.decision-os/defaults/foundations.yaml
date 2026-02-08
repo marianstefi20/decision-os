@@ -1,0 +1,24 @@
+# Project Foundations
+# Compressed learnings promoted from repeated pressure events.
+# Each foundation has confidence 0-3 and evolves based on outcomes.
+#
+# Foundations can be PROJECT-scoped (local) or GLOBAL-scoped (universal).
+# Global foundations live in ~/.decision-os and apply to all projects.
+# Use `elevate_foundation` to promote a project foundation to global.
+
+foundations: []
+
+# Example foundation:
+# - id: F-0001
+#   title: "Supabase RLS fails silently on null FK"
+#   default_behavior: "Always validate FK values before insert when using RLS"
+#   context_tags: [SUPABASE, RLS, DATA_MODEL]
+#   counter_contexts: [ADMIN_BYPASS, SERVICE_ROLE]
+#   confidence: 2
+#   scope: PROJECT                  # PROJECT (default) or GLOBAL
+#   origin_project: my-project      # Where this was first discovered
+#   validated_in: [my-project]      # Projects that confirmed this learning
+#   exit_criteria: "Supabase adds explicit error for null FK violations"
+#   source_pressures: [PE-0003, PE-0007]
+#   created_at: "2025-01-14T00:00:00Z"
+#   updated_at: "2025-01-14T00:00:00Z"

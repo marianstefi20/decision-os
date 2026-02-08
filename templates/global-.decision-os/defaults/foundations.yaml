@@ -1,0 +1,34 @@
+# Global Foundations
+# Universal learnings that apply across all projects.
+# These are RECOMMENDATIONS, not rules. Project context always matters.
+#
+# ID prefix: GF- (Global Foundation)
+# Confidence evolves based on validation across projects.
+#
+# Good candidates for global foundations:
+# - Tool behaviors that don't depend on tech stack
+# - Debugging strategies that work everywhere
+# - Meta-learnings about process and decision-making
+# - Cross-cutting patterns (logging, error handling, testing)
+#
+# NOT good candidates:
+# - Tech-stack-specific patterns (keep in project)
+# - Business domain logic (keep in project)
+# - Team-specific conventions (keep in project)
+
+foundations: []
+
+# Example global foundation:
+# - id: GF-0001
+#   title: "Trace call sites before refactoring"
+#   default_behavior: "Before refactoring a function, identify all call sites and understand how each uses the function. Changes to signatures or behavior need to account for all callers."
+#   context_tags: [REFACTORING, ARCHITECTURE]
+#   counter_contexts: [GREENFIELD, SINGLE_CALLER]
+#   confidence: 2
+#   scope: GLOBAL
+#   origin_project: groundh2oflow
+#   validated_in: [groundh2oflow, mco-assistant]
+#   exit_criteria: "IDE provides reliable call-site analysis"
+#   source_pressures: [PE-0012]
+#   created_at: "2025-01-15T00:00:00Z"
+#   updated_at: "2025-01-15T00:00:00Z"

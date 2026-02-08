@@ -1,0 +1,79 @@
+---
+description: Decision OS - LLM-native decision tracking and learning
+globs: ["**/*"]
+alwaysApply: true
+---
+
+# Decision OS
+
+You have access to Decision OS tools for tracking decisions and learning from pressure.
+
+## At Task Start
+
+Call `get_context()` to see:
+- Active case (if any)
+- Recent pressure events
+- Relevant foundations (ranked by relevance to current case)
+
+If no active case exists for this work, call `create_case()`.
+
+## When Surprised
+
+When reality differs from your expectation, capture it **immediately**.
+
+**Quick capture** (use when mid-flow, debugging, or iterating fast):
+
+```
+quick_pressure({
+  expected: "What you assumed would happen",
+  actual: "What actually happened"
+})
+```
+
+**Full capture** (use when you have time to reflect):
+
+```
+log_pressure({
+  expected: "What you assumed would happen",
+  actual: "What actually happened",
+  adaptation: "What you changed in response",
+  remember: "One-liner for future reference"
+})
+```
+
+If unsure whether something is novel pressure, capture it. Capturing too much is better than missing surprises.
+
+Examples of when to log:
+- Something failed that you predicted would work
+- You had to change approach mid-implementation
+- You discovered a constraint not in your initial context
+- A library behaved differently than documented
+- Performance was unexpectedly poor/good
+
+## Before BUILD Decisions
+
+Call `check_policy({ signals: {...} })` to see if:
+- Options comparison (MINIMAL vs ROBUST) is required
+- Higher validation level is needed
+
+## At Task End
+
+Call `close_case()` with:
+- `regret`: 0-3 (0 = would choose same approach, 3 = strong regret)
+- `notes`: What you learned
+- `regressions`: NONE / MINOR / MAJOR
+
+**Forgetting:** Cases with regret 0 and no unpromoted pressure events are automatically deleted. This is by design — knowledge lives in foundations, not cases. Cases are temporary containers; once their learning is extracted or they have nothing to teach, they are forgotten.
+
+## Periodic Review
+
+After closing several cases, call `suggest_review()` to:
+- Find clusters of unpromoted PEs that could become foundations
+- Identify cases blocking forgetting (promote or discard PEs to unblock)
+- Flag high-regret cases with no PEs (possible missed captures)
+
+## Current Foundations
+
+(Synced from project foundations - update as they evolve)
+
+*No foundations yet - they will emerge from pressure events.*

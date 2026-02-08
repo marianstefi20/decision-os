@@ -1,0 +1,20 @@
+# Decision OS Project Configuration
+# Copy this folder to your project root as `.decision-os/`
+
+project: your-project-name
+version: 1
+scope: PROJECT  # PROJECT = local to this codebase
+
+# Optional: Define project-specific repos
+# repos:
+#   backend: "github.com/you/project-backend"
+#   frontend: "github.com/you/project-frontend"
+
+# Optional: Extend base signals with project-specific values
+# signals:
+#   context:
+#     repo_scope:
+#       - BACKEND_ONLY
+#       - FRONTEND_ONLY
+#       - CROSS_REPO
+#       - SHARED_TYPES
