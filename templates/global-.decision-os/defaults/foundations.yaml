@@ -26,8 +26,8 @@ foundations: []
 #   counter_contexts: [GREENFIELD, SINGLE_CALLER]
 #   confidence: 2
 #   scope: GLOBAL
-#   origin_project: groundh2oflow
-#   validated_in: [groundh2oflow, mco-assistant]
+#   origin_project: my-project
+#   validated_in: [my-project, another-project]
 #   exit_criteria: "IDE provides reliable call-site analysis"
 #   source_pressures: [PE-0012]
 #   created_at: "2025-01-15T00:00:00Z"

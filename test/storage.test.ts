@@ -445,6 +445,48 @@ describe("foundations", () => {
     const lowConfidence = await storage.getFoundations({ min_confidence: 1 });
     expect(lowConfidence).toHaveLength(1);
   });
+
+  it("removes a foundation by id", async () => {
+    await storage.createCase({ title: "test" });
+    const pe1 = await storage.logPressure({
+      expected: "x", actual: "y", adaptation: "z", remember: "w",
+    });
+    const pe2 = await storage.logPressure({
+      expected: "a", actual: "b", adaptation: "c", remember: "d",
+    });
+
+    const f1 = await storage.promoteToFoundation({
+      title: "Keep this one",
+      default_behavior: "Stay",
+      context_tags: ["KEEP"],
+      source_pressures: [pe1.id],
+    });
+    const f2 = await storage.promoteToFoundation({
+      title: "Remove this one",
+      default_behavior: "Go away",
+      context_tags: ["REMOVE"],
+      source_pressures: [pe2.id],
+    });
+
+    const removed = await storage.removeFoundation(f2.id);
+    expect(removed).toBe(true);
+
+    const remaining = await storage.getFoundations();
+    expect(remaining).toHaveLength(1);
+    expect(remaining[0].id).toBe(f1.id);
+    expect(remaining[0].title).toBe("Keep this one");
+  });
+
+  it("returns false when removing non-existent foundation", async () => {
+    const removed = await storage.removeFoundation("F-9999");
+    expect(removed).toBe(false);
+  });
+
+  it("returns false when no foundations file exists", async () => {
+    // Fresh storage with no foundations file at all
+    const removed = await storage.removeFoundation("F-0001");
+    expect(removed).toBe(false);
+  });
 });
 
 // ============================================================================

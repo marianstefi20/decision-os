@@ -522,6 +522,28 @@ export class DecisionOSStorage {
     return validated;
   }
 
+  /**
+   * Remove a foundation by ID. Used when elevating a project foundation
+   * to global scope — the project copy is retired.
+   */
+  async removeFoundation(foundationId: string): Promise<boolean> {
+    const foundationsPath = join(this._basePath, "defaults", "foundations.yaml");
+    if (!existsSync(foundationsPath)) return false;
+
+    const data = await this.readYamlValidated(
+      foundationsPath,
+      FoundationsFileSchema,
+      "foundations"
+    );
+
+    const idx = data.foundations.findIndex((f) => f.id === foundationId);
+    if (idx === -1) return false;
+
+    data.foundations.splice(idx, 1);
+    await this.writeYaml(foundationsPath, data);
+    return true;
+  }
+
   private async markPressurePromoted(
     pressureId: string,
     foundationId: string

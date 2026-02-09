@@ -350,6 +350,12 @@ export class HierarchicalDecisionOSStorage {
       origin_project: config.project,
     });
 
+    // Retire the project copy — knowledge now lives in global
+    await this.projectLayer.removeFoundation(input.foundation_id);
+    console.error(
+      `Retired project foundation ${input.foundation_id} — elevated to ${globalFoundation.id}`
+    );
+
     return globalFoundation;
   }
 

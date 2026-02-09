@@ -81,6 +81,13 @@ Returns the project name, active case details, applicable foundations with sourc
         ...WORKSPACE_PATH_PROP,
       },
     },
+    annotations: {
+      title: "Get Context",
+      readOnlyHint: true,
+      destructiveHint: false,
+      idempotentHint: true,
+      openWorldHint: false,
+    },
   },
   {
     name: "log_pressure",
@@ -137,6 +144,13 @@ This is the primary learning mechanism. Be specific about what you expected vs w
       },
       required: ["expected", "actual", "adaptation", "remember"],
     },
+    annotations: {
+      title: "Log Pressure Event",
+      readOnlyHint: false,
+      destructiveHint: true,
+      idempotentHint: false,
+      openWorldHint: false,
+    },
   },
   {
     name: "quick_pressure",
@@ -191,6 +205,13 @@ Capturing too much is better than missing surprises.`,
       },
       required: ["expected", "actual"],
     },
+    annotations: {
+      title: "Quick Pressure Capture",
+      readOnlyHint: false,
+      destructiveHint: true,
+      idempotentHint: false,
+      openWorldHint: false,
+    },
   },
   {
     name: "create_case",
@@ -235,6 +256,13 @@ Creating a case provides context for logging pressure events.`,
       },
       required: ["title"],
     },
+    annotations: {
+      title: "Create Case",
+      readOnlyHint: false,
+      destructiveHint: true,
+      idempotentHint: false,
+      openWorldHint: false,
+    },
   },
   {
     name: "close_case",
@@ -269,6 +297,13 @@ Call this when work is complete. The regret score (0-3) is critical:
       },
       required: ["regret"],
     },
+    annotations: {
+      title: "Close Case",
+      readOnlyHint: false,
+      destructiveHint: true,
+      idempotentHint: false,
+      openWorldHint: false,
+    },
   },
   {
     name: "set_active_case",
@@ -284,6 +319,13 @@ Pressure events will be logged to the active case by default.`,
         },
       },
       required: ["case_id"],
+    },
+    annotations: {
+      title: "Set Active Case",
+      readOnlyHint: false,
+      destructiveHint: true,
+      idempotentHint: true,
+      openWorldHint: false,
     },
   },
   {
@@ -310,6 +352,13 @@ Query by context tags or minimum confidence to get relevant foundations.`,
         },
       },
     },
+    annotations: {
+      title: "Get Foundations",
+      readOnlyHint: true,
+      destructiveHint: false,
+      idempotentHint: true,
+      openWorldHint: false,
+    },
   },
   {
     name: "search_pressures",
@@ -326,6 +375,13 @@ Searches across expected, actual, adaptation, remember, and context_tags.`,
         },
       },
       required: ["query"],
+    },
+    annotations: {
+      title: "Search Pressure Events",
+      readOnlyHint: true,
+      destructiveHint: false,
+      idempotentHint: true,
+      openWorldHint: false,
     },
   },
   {
@@ -357,6 +413,13 @@ Call this before implementation to understand constraints.`,
         },
       },
       required: ["signals"],
+    },
+    annotations: {
+      title: "Check Policy",
+      readOnlyHint: true,
+      destructiveHint: false,
+      idempotentHint: true,
+      openWorldHint: false,
     },
   },
   {
@@ -408,6 +471,13 @@ that applies across all projects. Default is "PROJECT" (local only).`,
       },
       required: ["title", "default_behavior", "context_tags", "source_pressures"],
     },
+    annotations: {
+      title: "Promote to Foundation",
+      readOnlyHint: false,
+      destructiveHint: true,
+      idempotentHint: false,
+      openWorldHint: false,
+    },
   },
   {
     name: "elevate_foundation",
@@ -435,6 +505,13 @@ Strong signal for elevation:
       },
       required: ["foundation_id"],
     },
+    annotations: {
+      title: "Elevate Foundation to Global",
+      readOnlyHint: false,
+      destructiveHint: true,
+      idempotentHint: false,
+      openWorldHint: false,
+    },
   },
   {
     name: "validate_foundation",
@@ -459,6 +536,13 @@ Use when you observe a global foundation being correct in a new project context.
       },
       required: ["foundation_id"],
     },
+    annotations: {
+      title: "Validate Foundation",
+      readOnlyHint: false,
+      destructiveHint: true,
+      idempotentHint: true,
+      openWorldHint: false,
+    },
   },
   {
     name: "suggest_review",
@@ -476,6 +560,13 @@ This is the retrospective mechanism. Knowledge lives in foundations, not cases.`
         ...WORKSPACE_PATH_PROP,
       },
     },
+    annotations: {
+      title: "Suggest Review",
+      readOnlyHint: true,
+      destructiveHint: false,
+      idempotentHint: true,
+      openWorldHint: false,
+    },
   },
   {
     name: "list_cases",
@@ -486,6 +577,13 @@ or setting an active case.`,
     inputSchema: {
       type: "object",
       properties: {},
+    },
+    annotations: {
+      title: "List Cases",
+      readOnlyHint: true,
+      destructiveHint: false,
+      idempotentHint: true,
+      openWorldHint: false,
     },
   },
 ];
@@ -738,12 +836,15 @@ async function main() {
 
         case "elevate_foundation": {
           const input = ElevateFoundationInput.parse(rawArgs);
+          const previousId = input.foundation_id;
           const foundation = await storage.elevateFoundation(input);
           return {
             content: [
               {
                 type: "text",
-                text: `🌐 Elevated to GLOBAL foundation ${foundation.id}:\n${JSON.stringify(foundation, null, 2)}\n\nThis foundation will now apply across all projects.`,
+                text: `🌐 Elevated to GLOBAL foundation ${foundation.id}:\n${JSON.stringify(foundation, null, 2)}\n\n` +
+                  `Project copy ${previousId} retired — knowledge now lives in global scope.\n` +
+                  `This foundation will now apply across all projects.`,
               },
             ],
           };
